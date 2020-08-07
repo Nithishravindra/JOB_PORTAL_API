@@ -12,21 +12,12 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
-  const cookieOptions = {
-    expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
-    httpOnly: true,
-  };
 
-  res.cookie("jwt", token, cookieOptions);
-
-  // Remove password from output
   user.password = undefined;
+
   res.status(statusCode).json({
     status: "success",
     token,
-    // data: {
-    //   user,
-    // },
   });
 };
 
@@ -47,8 +38,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -66,9 +55,55 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res) => {
   console.log("Hello");
-  res.cookie("jwt", "loggedout", {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
-  res.status(200).json({ status: "success" });
+  // res.cookie("jwt", "loggedout", {
+  //   expires: new Date(Date.now() + 10 * 1000),
+  //   httpOnly: true,
+  // });
+  res.status(200).json({ status: "success", message: "logout" });
 };
+
+exports.protect = catchAsync(async (req, res, next) => {
+  // 1) Getting token and check of it's there
+
+  console.log("protect");
+
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+
+  console.log(token);
+
+  if (!token) {
+    return next(
+      new AppError("You are not logged in! Please log in to get access.", 401)
+    );
+  }
+
+  // 2) Verification token
+  const decoded = await promisify(jwt.verify)(
+    token,
+    "my-jsonwebtoken-for-demo-purpose"
+  );
+
+  // console.log(decoded);
+
+  // 3) Check if user still exists
+  const currentUser = await User.findById(decoded.id);
+
+  if (!currentUser) {
+    return next(
+      new AppError(
+        "The user belonging to this token does no longer exist.",
+        401
+      )
+    );
+  }
+
+  req.user = currentUser;
+  console.log(req.user);
+  next();
+});
