@@ -24,6 +24,20 @@ const jobSchema = new mongoose.Schema({
     type: Number,
     required: [true, "A company must few employees"],
   },
+  employer: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    required: [true, "A job can only be posted by employer"],
+  },
+});
+
+jobSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "employer",
+    select: "-role",
+  });
+
+  next();
 });
 
 const Job = mongoose.model("Job", jobSchema);

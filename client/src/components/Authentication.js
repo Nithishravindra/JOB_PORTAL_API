@@ -21,6 +21,7 @@ export default class AuthService {
       .post("http://localhost:3000/api/v1/users/login", data)
       .then(function (response) {
         console.log("In item");
+        console.log(response);
         localStorage.setItem("token", response.data.token);
       })
       .catch(function (error) {
