@@ -14,6 +14,6 @@ router
     jobController.createJob
   );
 
-router.route("/:id").get(jobController.getJob);
+router.route("/:id").get(jobController.getJob).delete(jobController.deleteJob);
 
 module.exports = router;

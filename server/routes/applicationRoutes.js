@@ -10,9 +10,10 @@ router.use(authController.restrictTo("user"));
 
 router.route("/").get(applicationController.getAllApplications);
 
-router.route("/:id").post(applicationController.createApplication);
-//   .get(bookingController.getBooking)
-//   .patch(bookingController.updateBooking)
-//   .delete(bookingController.deleteBooking);
+router
+  .route("/:id")
+  .get(applicationController.getApplication)
+  .post(applicationController.createApplication)
+  .delete(applicationController.deleteApplication);
 
 module.exports = router;

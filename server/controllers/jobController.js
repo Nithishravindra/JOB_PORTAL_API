@@ -1,32 +1,6 @@
 const Job = require("../model/jobModel");
 const catchAsync = require("../utils/catchAsync");
-
-exports.getAllJobs = catchAsync(async (req, res, next) => {
-  const jobs = await Job.find();
-
-  res.status(200).json({
-    status: "success",
-    results: jobs.length,
-    data: {
-      jobs,
-    },
-  });
-});
-
-exports.getJob = catchAsync(async (req, res, next) => {
-  const job = await Job.findById(req.params.id);
-
-  if (!job) {
-    return next(new AppError("No User found with that ID", 404));
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      job,
-    },
-  });
-});
+const factory = require("./handleFactory");
 
 exports.createJob = catchAsync(async (req, res, next) => {
   const job = await Job.create(req.body);
@@ -37,3 +11,7 @@ exports.createJob = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.getAllJobs = factory.getAll(Job);
+exports.getJob = factory.getOne(Job);
+exports.deleteJob = factory.deleteOne(Job);
