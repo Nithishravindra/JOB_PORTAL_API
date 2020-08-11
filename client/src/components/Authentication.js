@@ -14,11 +14,9 @@ export default class AuthService {
       password,
     };
 
-    return await axios
-      .post("http://localhost:3000/api/v1/users/login", data)
-      .catch((error) => {
-        return error.response;
-      });
+    return await axios.post(`${this.domain}/login`, data).catch((error) => {
+      return error.response;
+    });
   }
 
   loggedIn() {
@@ -57,5 +55,10 @@ export default class AuthService {
     console.log(this.getToken());
     console.log(decode(this.getToken()));
     return decode(this.getToken());
+  }
+
+  async getUser(Id) {
+    let res = await axios.get(`${this.domain}/${Id}`);
+    return res.data;
   }
 }
