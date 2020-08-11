@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import {Link} from 'react-router-dom';
-import Home from './Home';
-import axios from 'axios';
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Register extends Component {
   constructor(props) {
@@ -14,52 +13,47 @@ class Register extends Component {
       role: "User",
       checked: false,
       errors: {
-        fullName: '',
-        email: '',
-        password: '',
-        password1: '',
-      }
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.displayLogin = this.displayLogin.bind(this);
-    this.handleCheck =this.handleCheck.bind(this);
-    this.handleSubmit =this.handleSubmit.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
- 
-  handleCheck(e){
 
+  handleCheck(e) {
     this.setState({
-     checked : !this.state.checked,
-    
-    })
+      checked: !this.state.checked,
+    });
 
-    if(this.state.checked === true)
-    {
+    if (this.state.checked === true) {
       this.setState({
-        role: "User",
-      })
-    }
-      
-    else{
+        role: "user",
+      });
+    } else {
       this.setState({
-        role: "Employer"
-      })
+        role: "employer",
+      });
     }
   }
 
-  validateEmail(email){
+  validateEmail(email) {
     const pattern = /[a-zA-Z0-9]+[.]?([a-zA-Z0-9]+)?[@][a-z]{3,9}[.][a-z]{2,5}/g;
     const result = pattern.test(email);
-    if(result===true){
+    if (result === true) {
       this.setState({
-        emailError:false,
-        email:email
-      })
-    } else{
+        emailError: false,
+        email: email,
+      });
+    } else {
       this.setState({
-        emailError:true
-      })
+        emailError: true,
+      });
     }
   }
 
@@ -72,51 +66,62 @@ class Register extends Component {
       [name]: value,
     });
 
-
-    if(e.target.name==='fullname'){
-      if(e.target.value==='' || e.target.value===null || e.target.value.length < 4){
+    if (e.target.name === "fullname") {
+      if (
+        e.target.value === "" ||
+        e.target.value === null ||
+        e.target.value.length < 4
+      ) {
         this.setState({
-          fullnameError:true
-        })
+          fullnameError: true,
+        });
       } else {
         this.setState({
-          fullnameError: false,     
-          fullname: e.target.value
-        })
+          fullnameError: false,
+          fullname: e.target.value,
+        });
       }
     }
-  
-    if(e.target.name==='email'){
-     this.validateEmail(e.target.value);
+
+    if (e.target.name === "email") {
+      this.validateEmail(e.target.value);
     }
 
-    if(e.target.name==='password'){
-      if(e.target.value==='' || e.target.value===null || e.target.value.length < 8){
+    if (e.target.name === "password") {
+      if (
+        e.target.value === "" ||
+        e.target.value === null ||
+        e.target.value.length < 8
+      ) {
         this.setState({
-          passwordError:true
-        })
+          passwordError: true,
+        });
       } else {
         this.setState({
-          passwordError:false,
-          password:e.target.value,
+          passwordError: false,
+          password: e.target.value,
           pass: e.target.value,
-        })
+        });
       }
-   }
-
-   if(e.target.name==='password1'){
-    if(e.target.value==='' || e.target.value===null || e.target.value!==pass){
-      this.setState({
-        password1Error:true
-      })
-    } else {
-      this.setState({
-        password1Error:false,
-        password1:e.target.value
-      })
     }
- }
-}
+
+    if (e.target.name === "confirmPassword") {
+      if (
+        e.target.value === "" ||
+        e.target.value === null ||
+        e.target.value !== pass
+      ) {
+        this.setState({
+          confirmPasswordError: true,
+        });
+      } else {
+        this.setState({
+          confirmPasswordError: false,
+          confirmPassword: e.target.value,
+        });
+      }
+    }
+  }
 
   displayLogin(e) {
     e.preventDefault();
@@ -126,45 +131,41 @@ class Register extends Component {
       fullname: "",
       email: "",
       password: "",
-      password1: ""
+      confirmPassword: "",
     });
   }
-    
-  async handleSubmit(e){
+
+  async handleSubmit(e) {
     e.preventDefault();
-    
+
     const data = {
-     name: this.state.fullname,
-     email: this.state.email,
-     password: this.state.password,
-     passwordConfirm: this.state.password1,
-     role: this.state.role
-    }
+      name: this.state.fullname,
+      email: this.state.email,
+      password: this.state.password,
+      passwordConfirm: this.state.confirmPassword,
+      role: this.state.role,
+    };
 
     console.log(data);
 
-    let r = await axios
-    .post("http://localhost:3000/api/v1/users/signup", data)
-    .then(function (response) {
-      console.log("In item");
-      console.log(response);
-      localStorage.setItem("token", response.data.token);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-  return r;
-
+    return await axios
+      .post("http://localhost:3000/api/v1/users/signup", data)
+      .then(function (response) {
+        console.log("In item");
+        console.log(response);
+        localStorage.setItem("token", response.data.token);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
-  
-  render() {    
 
+  render() {
     return (
       <div className="register">
         <form onSubmit={this.displayLogin}>
           <h2>Register</h2>
-        
+
           <div className="name">
             <input
               type="text"
@@ -173,7 +174,13 @@ class Register extends Component {
               value={this.state.fullname}
               onChange={this.handleChange}
             />
-            {this.state.fullnameError ? <h5 className="validator">FullName should atleast be 4 characters</h5> : ''}
+            {this.state.fullnameError ? (
+              <h5 className="validator">
+                FullName should atleast be 4 characters
+              </h5>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="email">
@@ -184,7 +191,11 @@ class Register extends Component {
               value={this.state.email}
               onChange={this.handleChange}
             />
-            {this.state.emailError ? <span className="validator">Enter valid email address</span> : ''}
+            {this.state.emailError ? (
+              <span className="validator">Enter valid email address</span>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="password">
@@ -195,33 +206,43 @@ class Register extends Component {
               value={this.state.password}
               onChange={this.handleChange}
             />
-            {this.state.passwordError ? <span className="validator">Password should be atleast 8 characters long</span> : ''}
+            {this.state.passwordError ? (
+              <span className="validator">
+                Password should be atleast 8 characters long
+              </span>
+            ) : (
+              ""
+            )}
           </div>
 
           <div className="password">
             <input
               type="password"
               placeholder="Confirm Password *"
-              name="password1"
-              value={this.state.password1}
+              name="confirmPassword"
+              value={this.state.confirmPassword}
               onChange={this.handleChange}
             />
-            {this.state.password1Error ? <span className="validator">Passwords do not match</span> : ''}
+            {this.state.confirmPasswordError ? (
+              <span className="validator">Passwords do not match</span>
+            ) : (
+              ""
+            )}
           </div>
 
-         <h3 className="checkbox"><input type="checkbox" 
-              onChange={this.handleCheck} 
-              /> An Employer??</h3> 
+          <h3 className="checkbox">
+            <input type="checkbox" onChange={this.handleCheck} /> Are you an
+            Employer?
+          </h3>
 
-          <input type="submit" 
-            onClick={this.handleSubmit}
-            value="Register" />
+          <input type="submit" onClick={this.handleSubmit} value="Register" />
         </form>
 
-        <Link to="/" className="bottom-link">Login Here</Link>
+        <Link to="/" className="bottom-link">
+          Login Here
+        </Link>
       </div>
     );
-   
   }
 }
 

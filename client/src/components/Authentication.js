@@ -2,33 +2,23 @@ import decode from "jwt-decode";
 import axios from "axios";
 
 export default class AuthService {
-  constructor(domain) {
+  constructor() {
     this.domain = "http://localhost:3000/api/v1/users";
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
   }
 
   async login(email, password) {
-    // Get a token
-    console.log(password);
-
     const data = {
       email,
       password,
     };
 
-    let r = await axios
+    return await axios
       .post("http://localhost:3000/api/v1/users/login", data)
-      .then(function (response) {
-        console.log("In item");
-        console.log(response);
-        localStorage.setItem("token", response.data.token);
-      })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        return error.response;
       });
-
-    return r;
   }
 
   loggedIn() {

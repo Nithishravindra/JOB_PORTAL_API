@@ -2,7 +2,6 @@ body {
   padding: 0px;
   margin: 0px;
   font-family: "Ubuntu", sans-serif;
-  /* background-image: url("https://i1.wp.com/www.webevon.com/wp-content/uploads/2017/09/MaltaJobPort_launch.jpg?fit=825%2C486"); */
   background-image: url("https://www.adisoftronics.in/images/1536140184.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -77,19 +76,19 @@ input[type="submit"] {
   font-size: 16px;
 }
 
-.checkbox{
+.checkbox {
   color: #e6e6e6;
   text-align: -webkit-match-parent;
   font-weight: 750;
 }
 
-.bottom-link{
+.bottom-link {
   color: #00ffffba;
   text-shadow: 1px 1px rgb(1 6 12);
   font-size: 20px;
 }
 
-.validator{
+.validator {
   color: #f10909;
   margin-top: 0px;
   font-size: 15px;
@@ -183,6 +182,6 @@ input[type="submit"] {
   right: 0px;
 } */
 
-.signup-h4{
+.signup-h4 {
   display: inline;
 }
