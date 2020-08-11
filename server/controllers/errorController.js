@@ -4,7 +4,7 @@ module.exports = (err, req, res, next) => {
 
   console.log(err);
 
-  res.status(err.statusCode).json({
+  res.status(err.statusCode).send({
     status: err.status,
     message: err.message,
   });
