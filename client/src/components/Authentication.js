@@ -2,33 +2,21 @@ import decode from "jwt-decode";
 import axios from "axios";
 
 export default class AuthService {
-  constructor(domain) {
+  constructor() {
     this.domain = "http://localhost:3000/api/v1/users";
     this.login = this.login.bind(this);
     this.getProfile = this.getProfile.bind(this);
   }
 
   async login(email, password) {
-    // Get a token
-    console.log(password);
-
     const data = {
       email,
       password,
     };
 
-    let r = await axios
-      .post("http://localhost:3000/api/v1/users/login", data)
-      .then(function (response) {
-        console.log("In item");
-        console.log(response);
-        localStorage.setItem("token", response.data.token);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    return r;
+    return await axios.post(`${this.domain}/login`, data).catch((error) => {
+      return error.response;
+    });
   }
 
   loggedIn() {
@@ -67,5 +55,10 @@ export default class AuthService {
     console.log(this.getToken());
     console.log(decode(this.getToken()));
     return decode(this.getToken());
+  }
+
+  async getUser(Id) {
+    let res = await axios.get(`${this.domain}/${Id}`);
+    return res.data;
   }
 }

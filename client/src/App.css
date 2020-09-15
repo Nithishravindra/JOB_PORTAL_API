@@ -2,6 +2,10 @@ body {
   padding: 0px;
   margin: 0px;
   font-family: "Ubuntu", sans-serif;
+  background-image: url("https://www.adisoftronics.in/images/1536140184.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .container {
@@ -14,7 +18,11 @@ body {
 
 .login,
 .register {
+  padding: 15px;
   width: 400px;
+  /* margin-top: -60px; */
+  background: rgb(47 224 254 / 23%);
+  border-radius: 10px;
 }
 
 .login h2,
@@ -22,6 +30,8 @@ body {
   font-size: 45px;
   text-transform: uppercase;
   text-align: center;
+  color: aqua;
+  text-shadow: 4px 4px rgb(1 6 12);
 }
 
 .login a {
@@ -30,7 +40,7 @@ body {
 
 input[type="text"] {
   background-color: #e6e6e6;
-  color: #827ffe;
+  color: #000000;
   font-size: 16px;
   margin-bottom: 20px;
   border: none;
@@ -50,15 +60,128 @@ input[type="password"] {
 
 input[type="submit"] {
   padding: 15px 0px;
-  background-color: #827ffe;
+  background-color: #27e5f7d9;
   color: #fff;
   font-size: 20px;
   margin-top: 10px;
   margin-bottom: 20px;
   border: none;
   width: 100%;
+  color: #020202;
+  font-weight: 700;
+  font-size: 23px;
 }
 
 .check {
   font-size: 16px;
+}
+
+.checkbox {
+  color: #e6e6e6;
+  text-align: -webkit-match-parent;
+  font-weight: 750;
+}
+
+.bottom-link {
+  color: #00ffffba;
+  text-shadow: 1px 1px rgb(1 6 12);
+  font-size: 20px;
+}
+
+.validator {
+  color: #f10909;
+  margin-top: 0px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* .toggle-switch {
+  position: relative;
+  width: 75px;
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  text-align: left;
+  float: right;
+}
+.toggle{
+  margin-bottom: 50px;
+}
+
+.toggle-switch-checkbox {
+  display: none;
+}
+.toggle-switch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 0 solid #ccc;
+  border-radius: 20px;
+  margin: 0;
+}
+.toggle-switch-inner {
+  display: block;
+  width: 200%;
+  margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.toggle-switch-inner::before, .toggle-switch-inner::after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 34px;
+  padding: 0;
+  line-height: 34px;
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+.toggle-switch-inner:before {
+  content: "Yes";
+  text-transform: uppercase;
+  padding-left: 10px;
+  background-color: #827ffe;
+  color: #fff;
+}
+.toggle-switch-disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.toggle-switch-disabled::before {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+.toggle-switch-inner::after {
+  content: "No";
+  text-transform: uppercase;
+  padding-right: 10px;
+  background-color: #ccc;
+  color: #fff;
+  text-align: right;
+}
+.toggle-switch-switch {
+  display: block;
+  width: 24px;
+  margin: 5px;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 40px;
+  border: 0 solid #ccc;
+  border-radius: 20px;
+  transition: all 0.3s ease-in 0s;
+}
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-inner {
+  margin-left: 0;
+}
+.toggle-switch-checkbox:checked + .toggle-switch-label .toggle-switch-switch {
+  right: 0px;
+} */
+
+.signup-h4 {
+  display: inline;
 }
