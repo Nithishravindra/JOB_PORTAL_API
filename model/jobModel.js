@@ -1,45 +1,49 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
   companyName: {
     type: String,
-    required: [true, "A company must have name"],
+    required: [true, 'A company must have name']
   },
   role: {
     type: String,
-    required: [true, "A Role must have a name"],
+    required: [true, 'A Role must have a name'],
     trim: true,
-    maxlength: [20, "A Role have less or equal then 40 characters"],
-    minlength: [5, "A Role must have more or equal then 10 characters"],
+    maxlength: [20, 'A Role have less or equal then 40 characters'],
+    minlength: [5, 'A Role must have more or equal then 10 characters']
   },
   salary: {
     type: Number,
-    required: [true, "A company must provide salary"],
+    required: [true, 'A company must provide salary']
   },
   duration: {
     type: String,
-    required: [true, "Mention the time period of work"],
+    required: [true, 'Mention the time period of work']
   },
   companySize: {
     type: Number,
-    required: [true, "A company must few employees"],
+    required: [true, 'A company must few employees']
+  },
+  postedAt: {
+    type: Date,
+    default: Date.now()
   },
   employer: {
     type: mongoose.Schema.ObjectId,
-    ref: "User",
-    required: [true, "A job can only be posted by employer"],
-  },
+    ref: 'User',
+    required: [true, 'A job can only be posted by employer']
+  }
 });
 
 jobSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "employer",
-    select: "-role",
+    path: 'employer',
+    select: '-role'
   });
 
   next();
 });
 
-const Job = mongoose.model("Job", jobSchema);
+const Job = mongoose.model('Job', jobSchema);
 
 module.exports = Job;
