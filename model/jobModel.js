@@ -10,7 +10,10 @@ const jobSchema = new mongoose.Schema({
     required: [true, 'A Role must have a name'],
     trim: true,
     maxlength: [20, 'A Role have less or equal then 40 characters'],
-    minlength: [5, 'A Role must have more or equal then 10 characters']
+    minlength: [
+      5,
+      'A Role must have more or equal then 10 characters'
+    ]
   },
   salary: {
     type: Number,
