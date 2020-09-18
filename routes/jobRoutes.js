@@ -12,7 +12,7 @@ router
   .delete(jobController.deleteJob);
 
 router
-  .route('/:empID/postjob')
+  .route('/postjob/:empID')
   .post(
     authController.protect,
     authController.restrictTo('employer'),

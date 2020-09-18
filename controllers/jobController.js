@@ -17,5 +17,5 @@ exports.createJob = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllJobs = factory.getAll(Job);
-exports.getJob = factory.getOne(Job);
+exports.getJob = factory.getOne(Job, 'applicants');
 exports.deleteJob = factory.deleteOne(Job);
